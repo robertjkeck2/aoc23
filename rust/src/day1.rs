@@ -19,14 +19,14 @@ impl Day1 {
             let number: i32 = numbers[0] * 10 + numbers.last().unwrap();
             sum += number;
         }
-        println!("Part 1: {}", sum);     
+        println!("Part 1: {}", sum);
     }
 
     pub fn part2(&self, input: String) {
         let calibration_values: Vec<&str> = input.split("\n").collect();
         let mut sum: i32 = 0;
         for value in calibration_values {
-            let numbers = self.parse_digits(value.to_string());
+            let numbers: Vec<i32> = self.parse_digits(value.to_string());
             let number: i32 = numbers[0] * 10 + numbers.last().unwrap();
             sum += number;
         }
@@ -34,8 +34,16 @@ impl Day1 {
     }
 
     pub fn parse_digits(&self, input: String) -> Vec<i32> {
-        let re = Regex::new(r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))").unwrap();
-        let number_strings: Vec<&str> = re.captures_iter(&input).map(|mat| mat.unwrap().get(1).unwrap().as_str()).collect();
+        let re: Regex =
+            Regex::new(r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))").unwrap();
+        let number_strings: Vec<&str> = re
+            .captures_iter(&input)
+            .map(
+                |mat: Result<fancy_regex::Captures<'_>, fancy_regex::Error>| {
+                    mat.unwrap().get(1).unwrap().as_str()
+                },
+            )
+            .collect();
         let mut numbers: Vec<i32> = Vec::new();
         for number_string in number_strings {
             numbers.push(match number_string {
