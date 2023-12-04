@@ -25,7 +25,13 @@ public class Day2 implements Day {
     }
 
     public void part2(String input) {
-        System.out.println("Part 2: " + "TODO");
+        String[] game_values = input.split("\n");
+        int sum = 0;
+        for (String game_value : game_values) {
+            Game game = new Game(game_value);
+            sum += game.cube_power();
+        }
+        System.out.println("Part 2: " + sum);
     }
 }
 
@@ -50,6 +56,30 @@ final class Game {
         for (String raw_turn : raw_turns_split) {
             this.turns.add(new Turn(raw_turn));
         }
+    }
+
+    public int cube_power() {
+        int[] min_cubes = min_cubes();
+        return min_cubes[0] * min_cubes[1] * min_cubes[2];
+    }
+
+    public int[] min_cubes() {
+        int[] min_cubes = new int[3];
+        min_cubes[0] = 0;
+        min_cubes[1] = 0;
+        min_cubes[2] = 0;
+        for (Turn turn : this.turns) {
+            if (turn.green_cubes > min_cubes[0]) {
+                min_cubes[0] = turn.green_cubes;
+            }
+            if (turn.blue_cubes > min_cubes[1]) {
+                min_cubes[1] = turn.blue_cubes;
+            }
+            if (turn.red_cubes > min_cubes[2]) {
+                min_cubes[2] = turn.red_cubes;
+            }
+        }
+        return min_cubes;
     }
 }
 
