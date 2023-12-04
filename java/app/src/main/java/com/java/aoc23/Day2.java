@@ -1,3 +1,6 @@
+/*
+ * Advent of Code 2023 Day 2
+ */
 package com.java.aoc23;
 
 import java.util.ArrayList;
