@@ -31,7 +31,12 @@ impl Day for Day2 {
 
     fn part2(&self, input: String) {
         let game_values: Vec<&str> = input.split("\n").collect();
-        println!("Part 2: {}", "TODO");
+        let mut sum: i32 = 0;
+        for game_value in game_values {
+            let game = Game::new(game_value.to_string());
+            sum += game.cube_power();
+        }
+        println!("Part 2: {}", sum);
     }
 }
 
@@ -51,6 +56,27 @@ impl Game {
             turns.push(Turn::new(raw_turn.to_string()));
         }
         Game { game_num, turns }
+    }
+
+    pub fn cube_power(&self) -> i32 {
+        let cubes: Vec<i32> = self.min_cubes();
+        return cubes[0] * cubes[1] * cubes[2];
+    }
+
+    pub fn min_cubes(&self) -> Vec<i32> {
+        let mut min: Vec<i32> = [0, 0, 0].to_vec();
+        for turn in &self.turns {
+            if turn.green_cubes > min[0] {
+                min[0] = turn.green_cubes;
+            }
+            if turn.blue_cubes > min[1] {
+                min[1] = turn.blue_cubes;
+            }
+            if turn.red_cubes > min[2] {
+                min[2] = turn.red_cubes;
+            }
+        }
+        min
     }
 }
 
