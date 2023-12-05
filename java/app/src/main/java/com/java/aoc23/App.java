@@ -19,6 +19,9 @@ public class App {
             case "3":
                 day = new Day3();
                 break;
+            case "4":
+                day = new Day4();
+                break;
             default:
                 break;
         }
