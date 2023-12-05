@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class InputReaderTest {
     @Test
     void test_read_file_input() {
-        String input = InputReader.read_file_input("1");
+        String input = InputReader.readFileInput("1");
         System.out.println(input.charAt(0));
         assertEquals("t", input.substring(0, 1));
     }
