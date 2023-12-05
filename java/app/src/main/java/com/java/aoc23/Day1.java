@@ -9,13 +9,13 @@ import java.util.regex.Pattern;
 
 public class Day1 implements Day {
     public void part1(String input) {
-        String[] calibration_values = input.split("\n");
+        String[] calibrationValues = input.split("\n");
         int sum = 0;
-        for (String calibration_value : calibration_values) {
+        for (String calibrationValue : calibrationValues) {
             ArrayList<String> numbers = new ArrayList<String>();
-            for (int i = 0; i < calibration_value.length(); i++) {
-                if (Character.isDigit(calibration_value.charAt(i))) {
-                    numbers.add(calibration_value.substring(i, i + 1));
+            for (int i = 0; i < calibrationValue.length(); i++) {
+                if (Character.isDigit(calibrationValue.charAt(i))) {
+                    numbers.add(calibrationValue.substring(i, i + 1));
                 }
             }
             int number = Integer.parseInt(numbers.get(0)) * 10 + Integer.parseInt(numbers.get(numbers.size() - 1));
@@ -25,17 +25,17 @@ public class Day1 implements Day {
     }
 
     public void part2(String input) {
-        String[] calibration_values = input.split("\n");
+        String[] calibrationValues = input.split("\n");
         int sum = 0;
-        for (String calibration_value : calibration_values) {
-            int[] numbers = parse_digits(calibration_value);
+        for (String calibrationValue : calibrationValues) {
+            int[] numbers = parseDigits(calibrationValue);
             int number = numbers[0] * 10 + numbers[numbers.length - 1];
             sum += number;
         }
         System.out.println("Part 2: " + sum);
     }
 
-    public int[] parse_digits(String input) {
+    public int[] parseDigits(String input) {
         Pattern re = Pattern.compile("(?=(one|two|three|four|five|six|seven|eight|nine|\\d))",
                 Pattern.CASE_INSENSITIVE);
         Matcher m = re.matcher(input);

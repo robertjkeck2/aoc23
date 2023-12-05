@@ -5,11 +5,11 @@ package com.java.aoc23;
 
 public class App {
     public static void main(String[] args) {
-        String day_num = args[0];
-        String part_num = args[1];
-        String input = InputReader.read_file_input(day_num);
+        String dayNum = args[0];
+        String partNum = args[1];
+        String input = InputReader.readFileInput(dayNum);
         Day day = new Day1();
-        switch (day_num) {
+        switch (dayNum) {
             case "1":
                 day = new Day1();
                 break;
@@ -19,10 +19,13 @@ public class App {
             case "3":
                 day = new Day3();
                 break;
+            case "4":
+                day = new Day4();
+                break;
             default:
                 break;
         }
-        switch (part_num) {
+        switch (partNum) {
             case "1":
                 day.part1(input);
                 break;
