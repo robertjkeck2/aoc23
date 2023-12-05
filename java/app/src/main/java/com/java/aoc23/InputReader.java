@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class InputReader {
-    public static String read_file_input(String day_num) {
-        String filepath = "src/main/java/com/java/aoc23/data/day" + day_num + "/input.txt";
+    public static String readFileInput(String dayNum) {
+        String filepath = "src/main/java/com/java/aoc23/data/day" + dayNum + "/input.txt";
         Path path = Paths.get(filepath);
         if (!Files.exists(path)) {
             System.out.println("File not found: " + filepath);
