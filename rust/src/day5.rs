@@ -36,8 +36,36 @@ impl Day for Day5 {
     }
 
     fn part2(&self, input: String) {
-        let _: Vec<&str> = input.split("\n").collect();
-        println!("Part 2: {}", "TODO");
+        let almanac_components: Vec<&str> = input.split("\n\n").collect();
+        let mut min_location: i64 = 9223372036854775807;
+        let (
+            seeds,
+            seed_to_soil,
+            soil_to_fertilizer,
+            fertilizer_to_water,
+            water_to_light,
+            light_to_temperature,
+            temperature_to_humidity,
+            humidity_to_location,
+        ) = parse_input(almanac_components);
+
+        for i in (0..seeds.len()).step_by(2) {
+            let seed_start: i64 = seeds[i].parse::<i64>().unwrap();
+            let seed_end: i64 = seed_start + seeds[i + 1].parse::<i64>().unwrap();
+            for seed in seed_start..seed_end {
+                let soil: i64 = seed_to_soil.convert(seed);
+                let fertilizer: i64 = soil_to_fertilizer.convert(soil);
+                let water: i64 = fertilizer_to_water.convert(fertilizer);
+                let light: i64 = water_to_light.convert(water);
+                let temperature: i64 = light_to_temperature.convert(light);
+                let humidity: i64 = temperature_to_humidity.convert(temperature);
+                let location: i64 = humidity_to_location.convert(humidity);
+                if location < min_location {
+                    min_location = location;
+                }
+            }
+        }
+        println!("Part 2: {}", min_location);
     }
 }
 
