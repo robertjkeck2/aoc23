@@ -10,7 +10,6 @@ public class Day8 implements Day {
         String[] lines = input.split("\n");
         String[] instructions = lines[0].split("");
         HashMap<String, String> map = new HashMap<String, String>();
-        String location = lines[2].split(" = ")[0];
         for (int i = 0; i < lines.length; i++) {
             if (i == 0 || i == 1) {
                 continue;
@@ -24,6 +23,7 @@ public class Day8 implements Day {
         }
         boolean found = false;
         long index = 0;
+        String location = "AAA";
         while (!found) {
             String instruction = instructions[(int) (index % instructions.length)];
             String newLocation;
@@ -32,12 +32,12 @@ public class Day8 implements Day {
             } else {
                 newLocation = map.get(location + "-R");
             }
+            index++;
             if (newLocation.equals("ZZZ")) {
                 found = true;
                 break;
             }
             location = newLocation;
-            index++;
         }
         System.out.println("Part 1: " + index);
     }
