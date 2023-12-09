@@ -4,7 +4,6 @@
 package com.java.aoc23;
 
 import java.util.HashMap;
-import java.util.Arrays;
 
 public class Day8 implements Day {
     public void part1(String input) {
