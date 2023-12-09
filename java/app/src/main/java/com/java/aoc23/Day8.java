@@ -4,6 +4,7 @@
 package com.java.aoc23;
 
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class Day8 implements Day {
     public void part1(String input) {
@@ -58,33 +59,39 @@ public class Day8 implements Day {
             map.put(key + "-R", value[1]);
         }
         String[] locations = { "AAA", "HVA", "FXA", "LBA", "PSA", "GHA" };
-        boolean found = false;
-        long index = 0;
-        while (!found) {
-            String instruction = instructions[(int) (index % instructions.length)];
-            String[] newLocations = new String[locations.length];
-            for (int i = 0; i < locations.length; i++) {
+        long lcm = 1;
+        long[] pathLength = new long[locations.length];
+        for (int i = 0; i < locations.length; i++) {
+            boolean found = false;
+            long index = 0;
+            String location = locations[i];
+            while (!found) {
+                String instruction = instructions[(int) (index % instructions.length)];
                 String newLocation;
                 if (instruction.equals("L")) {
-                    newLocation = map.get(locations[i] + "-L");
+                    newLocation = map.get(location + "-L");
                 } else {
-                    newLocation = map.get(locations[i] + "-R");
+                    newLocation = map.get(location + "-R");
                 }
-                newLocations[i] = newLocation;
-            }
-            index++;
-            int numEndInZ = 0;
-            for (int i = 0; i < newLocations.length; i++) {
-                if (newLocations[i].endsWith("Z")) {
-                    numEndInZ++;
+                index++;
+                if (newLocation.endsWith("Z")) {
+                    found = true;
+                    break;
                 }
+                location = newLocation;
             }
-            if (numEndInZ == newLocations.length) {
-                found = true;
-                break;
-            }
-            locations = newLocations.clone();
+            pathLength[i] = index;
         }
-        System.out.println("Part 2: " + index);
+        // Find LCM of path lengths
+        for (int i = 0; i < pathLength.length; i++) {
+            lcm = lcm * pathLength[i] / gcd(lcm, pathLength[i]);
+        }
+        System.out.println("Part 2: " + lcm);
+    }
+
+    public long gcd(long a, long b) {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
     }
 }
