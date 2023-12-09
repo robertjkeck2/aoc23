@@ -7,6 +7,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 mod input;
 
 use day::Day;
@@ -18,6 +19,7 @@ use day5::Day5;
 use day6::Day6;
 use day7::Day7;
 use day8::Day8;
+use day9::Day9;
 use input::InputReader;
 use std::env;
 
@@ -36,6 +38,7 @@ fn main() {
         6 => day = &Day6,
         7 => day = &Day7,
         8 => day = &Day8,
+        9 => day = &Day9,
         _ => panic!("Day {} not implemented yet", day_num),
     }
     match input_num {
