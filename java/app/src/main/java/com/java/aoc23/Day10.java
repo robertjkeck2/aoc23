@@ -5,7 +5,6 @@ package com.java.aoc23;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.awt.Polygon;
 
 public class Day10 implements Day {
     public void part1(String input) {
@@ -17,21 +16,19 @@ public class Day10 implements Day {
     public void part2(String input) {
         Puzzle puzzle = new Puzzle(input, "E");
         puzzle.solve();
-        int numberOfPointsInPolygon = puzzle.numberOfPointsInPolygon();
-        System.out.println("Part 2: " + numberOfPointsInPolygon);
+        int area = puzzle.area();
+        System.out.println("Part 2: " + area);
     }
 }
 
 final class Puzzle {
     String[][] input;
     ArrayList<int[]> visitedLocations = new ArrayList<int[]>();
-    Polygon polygon;
     int[] startLocation;
     int[] currentLocation;
     String currentDirection; // N, E, S, W
     boolean isFinished = false;
     int pathLength = 0;
-    int pointsInPolygon = 0;
 
     public Puzzle(String input, String startingDirection) {
         this.input = Arrays.stream(input.split("\n"))
@@ -46,26 +43,17 @@ final class Puzzle {
         while (!isFinished) {
             move();
         }
-        polygon = new Polygon(visitedLocations.stream().mapToInt(i -> i[0]).toArray(),
-                visitedLocations.stream().mapToInt(i -> i[1]).toArray(),
-                visitedLocations.size());
         return pathLength;
     }
 
-    public int numberOfPointsInPolygon() {
-        for (int i = 0; i < input.length; i++) {
-            String[] row = input[i];
-            for (int j = 0; j < row.length; j++) {
-                if (isPointInPolygon(i, j)) {
-                    pointsInPolygon++;
-                }
-            }
+    public int area() {
+        int shoelaceArea = 0;
+        for (int i = 0; i < visitedLocations.size() - 1; i++) {
+            int[] point1 = visitedLocations.get(i);
+            int[] point2 = visitedLocations.get(i + 1);
+            shoelaceArea += point1[0] * point2[1] - point2[0] * point1[1];
         }
-        return pointsInPolygon - (pathLength / 2) + 1;
-    }
-
-    private boolean isPointInPolygon(int x, int y) {
-        return polygon.contains(x, y);
+        return Math.abs(shoelaceArea) / 2 - (pathLength / 2) + 1;
     }
 
     private void findStartLocation() {
