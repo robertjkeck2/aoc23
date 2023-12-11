@@ -2,6 +2,7 @@ mod day;
 mod day1;
 mod day10;
 mod day11;
+mod day12;
 mod day2;
 mod day3;
 mod day4;
@@ -16,6 +17,7 @@ use day::Day;
 use day1::Day1;
 use day10::Day10;
 use day11::Day11;
+use day12::Day12;
 use day2::Day2;
 use day3::Day3;
 use day4::Day4;
@@ -45,6 +47,7 @@ fn main() {
         9 => day = &Day9,
         10 => day = &Day10,
         11 => day = &Day11,
+        12 => day = &Day12,
         _ => panic!("Day {} not implemented yet", day_num),
     }
     match input_num {
