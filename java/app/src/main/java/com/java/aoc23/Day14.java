@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Day14 implements Day {
     public void part1(String input) {
         Dish dish = new Dish(input);
-        dish.printColumns();
-        System.out.println("Part 1: " + "TODO");
+        int weights = dish.getWeights();
+        System.out.println("Part 1: " + weights);
     }
 
     public void part2(String input) {
@@ -33,8 +33,12 @@ final class Dish {
         }
     }
 
-    public void printColumns() {
-        columns[0].printSortedRocks();
+    public int getWeights() {
+        int weights = 0;
+        for (int i = 0; i < columns.length; i++) {
+            weights += columns[i].getWeight();
+        }
+        return weights;
     }
 }
 
@@ -62,31 +66,45 @@ final class DishColumn {
             sort();
         } else {
             int stopNum = 0;
-            for (int i = 0; i < rocks.size(); i++) {
+            boolean isO = false;
+            for (int i = 0; i < rocks.size() - 1; i++) {
                 if (rocks.get(i + 1).equals("#")) {
                     stopNum = i + 1;
                     break;
                 } else if (rocks.get(i + 1).equals("O")) {
+                    isO = true;
                     sortedRocks.add(rocks.get(i + 1));
                     rocks.set(i + 1, ".");
                     rocks.remove(0);
                     break;
                 }
             }
-            if (stopNum > 0) {
+            if (stopNum > 0 || isO) {
                 for (int i = 0; i < stopNum; i++) {
                     sortedRocks.add(".");
                     rocks.remove(0);
                 }
+                sort();
+            } else {
+                sortedRocks.add(".");
+                rocks.remove(0);
+                sort();
             }
-            sort();
         }
     }
 
-    public void printSortedRocks() {
-        sort();
-        for (String rock : sortedRocks) {
-            System.out.print(rock);
+    public int calculateScore() {
+        int score = 0;
+        for (int i = 0; i < sortedRocks.size(); i++) {
+            if (sortedRocks.get(i).equals("O")) {
+                score += sortedRocks.size() - i;
+            }
         }
+        return score;
+    }
+
+    public int getWeight() {
+        sort();
+        return calculateScore();
     }
 }
